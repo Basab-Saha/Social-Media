@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Note</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 70%; /* Adjust width to your preference */
+            max-width: 500px; /* Maximum width for larger screens */
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #667eea;
+            color: #fff;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Note</h2>
+        <form method="POST" action="/notes/<%= noteId %>">
+
+            <label for="updatedTitle">Updated Title</label>
+            <input type="text" name="updatedTitle" id="updatedTitle" required placeholder="Enter updated title">
+
+            <label for="updatedContent">Updated Content</label>
+            <input type="text" name="updatedContent" id="updatedContent" required placeholder="Enter updated content">
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</body>
+</html>

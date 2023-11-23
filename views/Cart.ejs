@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        /* Define your styles here */
+        .cart-item {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .cart-item img {
+            width: 200px; /* Set the width */
+            height: 200px; /* Set the height */
+            object-fit: cover; /* Ensures the image covers the entire frame */
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+
+    <div>
+        <% cartItems.forEach(item => { %>
+            <div class="cart-item">
+                <h3>Item: <%= item.title %></h3>
+                <img src="/notes/<%= item._id %>/image" alt="<%= item.title %>">
+            </div>
+        <% }); %>
+    </div>
+</body>
+</html>

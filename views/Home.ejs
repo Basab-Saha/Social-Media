@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome <%= name %> to Your Dashboard</h1>
+    </div>
+
+    <div class="dashboard">
+        <div class="left-panel">
+            <h2>Create New Note</h2>
+            <form class="create-note-form" method="post" action="/notes" enctype="multipart/form-data">
+                <label for="title">Enter Title of Your Note</label>
+                <input type="text" name="title" id="title" required placeholder="Title" />
+            
+                <label for="content">Write Your Content</label>
+                <input type="text" name="content" id="content" required placeholder="Content" />
+            
+                <label for="image">Upload Image</label>
+                <input type="file" name="image" id="image" accept="image/*" />
+            
+                <button type="submit">Create Note</button>
+            </form>
+            
+        </div>
+
+        <button onclick="goToCart()">Go to Cart</button>
+
+        <div class="right-panel">
+            <% allNotes.map(note => { %>
+                <div class="note" >
+                    <h3><%= note.title %></h3>
+                    <p><%= note.content %></p>
+
+                    <% if (note.image && note.image.contentType) { %>
+                        <img src="/notes/<%= note._id %>/image" alt="<%= note.title %> Image">
+                        <% console.log('Image and content type available:'); %>
+                    <% } else { %>
+                        <% console.log('Image or content type not available:'); %>
+                    <% } %>
+
+                    <div class="note-buttons">
+                        <button onclick="updateNote('<%= note._id %>')">Update</button>
+                        <button onclick="deleteNote('<%= note._id %>')">Delete</button>
+                        <button onclick="viewNote(`<%= note._id %>`)">View Note</button>
+                        <button onclick="addToCart(`<%= note._id %>`)">Add to cart</button>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        
+        <div class="feed">
+            <h2>Feed - All Users' Notes</h2>
+            <% allUsersNotes.map(note => { %>
+                <div class="note">
+                    <h3><%= note.title %></h3>
+                    <p><%= note.content %></p>
+                    <% if (note.image && note.image.contentType) { %>
+                        <img src="/notes/<%= note._id %>/image" alt="<%= note.title %> Image">
+                    <% } %>
+                    <p>Created by: <%= note.createdBy %></p>
+                    <p>Likes: <%= note.likes || 0 %></p>
+                    <p>Dislikes: <%= note.dislikes || 0 %></p>
+                    <button onclick="likeNote('<%= note._id %>')">Like</button>
+                    <button onclick="dislikeNote('<%= note._id %>')">Dislike</button>
+                    <button onclick="viewNote(`<%= note._id %>`)">View Note</button>
+                </div>
+            <% }); %>
+        </div>
+        
+
+    <form method="get" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
+
+
+    <script>
+        
+        function deleteNote(noteId) {
+            fetch(`/notes/${noteId}`, {
+                method: 'DELETE',
+            })  
+        }
+
+        function viewNote(noteId){
+            window.location.href = `/notes/${noteId}/view`
+        }
+        
+
+
+        function likeNote(noteId) {
+            window.location.href = `/notes/${noteId}/like`
+            
+        }
+
+        function deleteNote(noteId) {
+            fetch(`/notes/${noteId}`, {
+                method: 'DELETE',
+            })  
+        }
+
+        function addToCart(noteId) {
+            window.location.href = `/cart/${noteId}/add`
+            
+        }
+
+        function goToCart() {
+            window.location.href = '/cart';
+        }
+
+        
+    </script>
+
+
+</body>
+</html>

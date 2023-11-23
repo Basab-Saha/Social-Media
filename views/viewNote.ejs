@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note View</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .coverPhoto {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 20px 0;
+        }
+
+        .upperPanel {
+            width: 60%;
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+
+        .imagePanel {
+            width: 50%;
+        }
+
+        .contentPanel {
+            width: 50%;
+            padding-left: 20px;
+        }
+
+        .commentsContainer {
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .commentPanel {
+            width: 100%;
+            max-width: 350px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .commentPanel textarea {
+            width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .commentPanel button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .commentPanel button:hover {
+            background-color: #0056b3;
+        }
+
+        .comments {
+            margin: 0 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .comments div {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            transition: all 0.3s;
+        }
+
+        .comments div:hover {
+            background-color: #f9f9f9;
+        }
+
+        .comments strong {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .comments p {
+            font-size: 0.9em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="upperPanel">
+        <div class="imagePanel">
+            <img class="coverPhoto" src="/notes/<%= requiredNote._id %>/image" alt="<%= requiredNote.title %> Image">
+        </div>
+        <div class="contentPanel">
+            <p><%= requiredNote.content %></p>
+        </div>
+    </div>
+
+    <div class="commentsContainer">
+        <div class="commentPanel">
+            <form method="POST" action="/notes/<%= requiredNote._id %>/comments">
+                <textarea placeholder="Write a comment..." rows="4" name="comment"></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+
+        <div class="comments">
+            <% allPostComments.forEach(comment => { %>
+                <div>
+                    <strong><%= comment.commentedBy %></strong>
+                    <p><%= comment.content %></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
